@@ -27,7 +27,13 @@ def readData(input_file):
     return photos
 
 
-
+def calculateScoreBetweenPhotos(photoA, photoB):
+    n_common_tags = 0;
+    for tag in photoA.tags:
+        if tag in photoB.tags:
+            n_common_tags = n_common_tags + 1
+    return min([n_common_tags, len(photoA.tags) - n_common_tags, len(photoB.tags) - n_common_tags])
+    
 
 def printPhotos(photos):
     for photo in photos:
@@ -36,4 +42,4 @@ def printPhotos(photos):
 
 
 photos = readData("a_example.txt")
-print(photos)
+# print(photos)
