@@ -1,12 +1,14 @@
 class Photo:
-    def __init__(self, position, tags):
+    def __init__(self, position, tags, id):
         self.position = position
         self.tags = tags
+        self.id = id;
 
 class Slide:
-    def __init__(self, tags):
+    def __init__(self, tags, id):
         self.position = position
         self.tags = tags
+        self.id = id
 
 
 def readData(input_file):   
@@ -20,9 +22,11 @@ def readData(input_file):
         tags = []
         for tag in range(2, n_tags + 2):
             tags.append(photo_data[tag])
-        photos.append(Photo(position, tags))
+        photos.append(Photo(position, tags, photo))
 
     return photos
+
+
 
 
 def printPhotos(photos):
