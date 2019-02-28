@@ -55,16 +55,16 @@ def slideshow_maker(input_file):
     # print("-----------------------")
     # convert to slides
     slides = createSlides(photos)
-    print ('Converted to slides')
+    #print ('Converted to slides')
     slides = sortSlides(slides)
     slideshow = []
     tail = slides[0]
     slideshow.append(tail)    
 
     while (len(slides) > 1):
-        #print(len(slides))
-        if (len(slides) % 1000 == 0):
-            print(len(slides))
+        # print(len(slides))
+        # if (len(slides) % 1000 == 0):
+        #     print(len(slides))
         slides.remove(tail)  # remove from slides
         bestScore = 0
         bestSlide = slides[0]
@@ -131,11 +131,12 @@ def createSlides(photos):
         slides.append(vertical_slide)
     return slides
 
-#slideshow = slideshow_maker("e_shiny_selfies.txt")
 #slideshow = slideshow_maker("a_example.txt")
-slideshow = slideshow_maker("d_pet_pictures.txt")
+slideshow = slideshow_maker("b_lovely_landscapes.txt")
+#slideshow = slideshow_maker("e_shiny_selfies.txt")
+#slideshow = slideshow_maker("d_pet_pictures.txt")
 printSubmission(slideshow)
-print('-------------- Score --------------')
-print(calculateScoreOfSlideshow(slideshow))
+#print('-------------- Score --------------')
+#print(calculateScoreOfSlideshow(slideshow))
 
 
