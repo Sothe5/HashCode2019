@@ -27,13 +27,16 @@ def readData(input_file):
     return photos
 
 
-def calculateScoreBetweenPhotos(photoA, photoB):
+def calculateScoreBetweenSlides(slideA, slideB):
     n_common_tags = 0;
-    for tag in photoA.tags:
-        if tag in photoB.tags:
+    for tag in slideA.tags:
+        if tag in slideB.tags:
             n_common_tags = n_common_tags + 1
-    return min([n_common_tags, len(photoA.tags) - n_common_tags, len(photoB.tags) - n_common_tags])
+    return min([n_common_tags, len(slideA.tags) - n_common_tags, len(slideB.tags) - n_common_tags])
     
+def calculateScoreOfSlideshow(slide_show):
+
+
 
 def printPhotos(photos):
     for photo in photos:
