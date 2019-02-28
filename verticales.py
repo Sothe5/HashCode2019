@@ -55,12 +55,13 @@ def groupVerticals(verticals):
         prev_similar_tags = len(photo1.tags)
         verticals.remove(photo1)
         for photo2 in verticals:
-            similar_tags = photo1.tags.count(photo2.tags)
+            similar_tags = len(list(set(photo1_copy.tags).intersection(photo2.tags)))
             if (similar_tags < prev_similar_tags):
                 best_photo = photo2
                 prev_similar_tags = similar_tags
         slides.append(Photo("H", list(set().union(photo1_copy.tags, best_photo.tags)), [photo1_copy.id, best_photo.id]))
         verticals.remove(best_photo)
+        printPhotos([slides[len(slides)-1]])
     return slides
 
 def createSlides(photos):
@@ -73,7 +74,7 @@ def createSlides(photos):
 
 
 
-photos = readData("b_lovely_landscapes.txt")
+photos = readData("d_pet_pictures.txt")
 verticals, horizontals = separatePhotos(photos)
 slides_verticals = groupVerticals(verticals)
 printPhotos(slides_verticals)
