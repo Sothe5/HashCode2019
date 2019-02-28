@@ -3,8 +3,13 @@ class Photo:
         self.position = position
         self.tags = tags
 
+class Slide:
+    def __init__(self, tags):
+        self.position = position
+        self.tags = tags
 
-def readData(input_file):
+
+def readData(input_file):   
     input = open(input_file, "r")
     photos = []
     n_photos = int(input.readline())
