@@ -109,7 +109,7 @@ def groupVerticals(verticals):
             continue_for = False
             similar_tags = 0;
             for tag in photo1_copy.tags:
-                if tag in photo2.tags:
+                if tag in sorted(photo2.tags):
                     similar_tags = similar_tags + 1
                     if (similar_tags == best_similar_tags):
                         continue_for = True
@@ -120,10 +120,14 @@ def groupVerticals(verticals):
             if (similar_tags < best_similar_tags):
                 best_photo = photo2
                 best_similar_tags = similar_tags
+            if(best_similar_tags == 0):
+                break
         if(photo1_copy.id[0] != best_photo.id[0]):
             slides.append(Photo("H", list(set().union(photo1_copy.tags, best_photo.tags)), [photo1_copy.id[0], best_photo.id[0]]))
         verticals.remove(best_photo)
-        printPhotos([slides[len(slides)-1]])
+        #printPhotos([slides[len(slides)-1]])
+        if (len(slides) % 100 == 0):
+            print(len(slides))
     return slides
 
 def sortByLenTags(slide):
