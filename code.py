@@ -24,7 +24,7 @@ def readData(input_file):
         tags = []
         for tag in range(2, n_tags + 2):
             tags.append(photo_data[tag])
-        photos.append(Photo(position, tags, photo))
+        photos.append(Photo(position, tags, [photo]))
 
     return photos
 
@@ -49,9 +49,10 @@ def printPhotos(photos):
 
 
 def slideshow_maker(input_file):
-    photos = readData("a_example.txt")
-    printPhotos(photos)
-    print("-----------------------")
+    photos = readData(input_file)
+    #print(len(photos))
+    # printPhotos(photos)
+    # print("-----------------------")
     # convert to slides
     slides = photos
     slideshow = []
@@ -59,6 +60,9 @@ def slideshow_maker(input_file):
     slideshow.append(tail)    
 
     while (len(slides) > 1):
+        #print(len(slides))
+        if (len(slides) % 1000 == 0):
+            print(len(slides))
         slides.remove(tail)  # remove from slides
         bestScore = 0
         bestSlide = slides[0]
@@ -67,7 +71,7 @@ def slideshow_maker(input_file):
             if (score > bestScore):
                 bestScore = score
                 bestSlide = slide
-            if (score == math.floor(len(slide.tags)/2)):
+            if (score >= len(slide.tags)/2 - 0.5):
                 break
         
         slideshow.append(bestSlide)
@@ -75,7 +79,18 @@ def slideshow_maker(input_file):
     
     return slideshow
 
-printPhotos(slideshow_maker("a_example.txt"))
+def printSubmission(slideshow):
+    print(len(slideshow))
+    for slide in slideshow:
+        for id in slide.id:
+            print(id, end=' ')
+        print()
 
+
+slideshow = slideshow_maker("a_example.txt")
+#printPhotos(slideshow_maker("a_example.txt"))
+printSubmission(slideshow)
+print('-------------- Score --------------')
+print(calculateScoreOfSlideshow(slideshow))
 
 
