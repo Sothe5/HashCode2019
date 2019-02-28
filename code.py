@@ -1,3 +1,5 @@
+import math
+
 class Photo:
     def __init__(self, position, tags, id):
         self.position = position
@@ -35,8 +37,10 @@ def calculateScoreBetweenSlides(slideA, slideB):
     return min([n_common_tags, len(slideA.tags) - n_common_tags, len(slideB.tags) - n_common_tags])
     
 def calculateScoreOfSlideshow(slide_show):
-
-
+    score = 0
+    for i in range(1, len(slide_show)):
+        score = score + calculateScoreBetweenSlides(slide_show[i-1], slide_show[i]);
+    return score
 
 def printPhotos(photos):
     for photo in photos:
@@ -44,5 +48,34 @@ def printPhotos(photos):
         print(photo.tags)
 
 
-photos = readData("a_example.txt")
-# print(photos)
+def slideshow_maker(input_file):
+    photos = readData("a_example.txt")
+    printPhotos(photos)
+    print("-----------------------")
+    # convert to slides
+    slides = photos
+    slideshow = []
+    tail = slides[0]
+    slideshow.append(tail)    
+
+    while (len(slides) > 1):
+        slides.remove(tail)  # remove from slides
+        bestScore = 0
+        bestSlide = slides[0]
+        for slide in slides:
+            score = calculateScoreBetweenSlides(tail, slide)
+            if (score > bestScore):
+                bestScore = score
+                bestSlide = slide
+            if (score == math.floor(len(slide.tags)/2)):
+                break
+        
+        slideshow.append(bestSlide)
+        tail = bestSlide
+    
+    return slideshow
+
+printPhotos(slideshow_maker("a_example.txt"))
+
+
+
