@@ -103,18 +103,33 @@ def groupVerticals(verticals):
     for photo1 in verticals:
         photo1_copy = photo1
         best_photo = photo1
-        prev_similar_tags = len(photo1.tags)
+        best_similar_tags = len(photo1.tags)
         verticals.remove(photo1)
         for photo2 in verticals:
-            similar_tags = len(list(set(photo1_copy.tags).intersection(photo2.tags)))
-            if (similar_tags < prev_similar_tags):
+            continue_for = False
+            similar_tags = 0;
+            for tag in photo1_copy.tags:
+                if tag in sorted(photo2.tags):
+                    similar_tags = similar_tags + 1
+                    if (similar_tags == best_similar_tags):
+                        continue_for = True
+                        break
+                if (continue_for):
+                    continue
+
+            if (similar_tags < best_similar_tags):
                 best_photo = photo2
-                prev_similar_tags = similar_tags
+                best_similar_tags = similar_tags
+            if(best_similar_tags == 0):
+                break
         if(photo1_copy.id[0] != best_photo.id[0]):
             slides.append(Photo("H", list(set().union(photo1_copy.tags, best_photo.tags)), [photo1_copy.id[0], best_photo.id[0]]))
         verticals.remove(best_photo)
         #printPhotos([slides[len(slides)-1]])
+        # if (len(slides) % 100 == 0):
+        #     print(len(slides))
     return slides
+
 
 def sortByLenTags(slide):
     return len(slide.tags)
@@ -132,9 +147,9 @@ def createSlides(photos):
     return slides
 
 #slideshow = slideshow_maker("a_example.txt")
-slideshow = slideshow_maker("b_lovely_landscapes.txt")
+#slideshow = slideshow_maker("b_lovely_landscapes.txt")
 #slideshow = slideshow_maker("e_shiny_selfies.txt")
-#slideshow = slideshow_maker("d_pet_pictures.txt")
+slideshow = slideshow_maker("d_pet_pictures.txt")
 printSubmission(slideshow)
 #print('-------------- Score --------------')
 #print(calculateScoreOfSlideshow(slideshow))
